@@ -1,5 +1,5 @@
 import numpy
-from math import log
+from math import log,sqrt
 
 class VectorSpaceModel():
 	def __init__(self):
@@ -40,7 +40,13 @@ class VectorSpaceModel():
 				if self.__vectors[i][j]!=0:
 					self.__vectors[i][j]=(1+log(self.__vectors[i][j]))*(idf[j])
 		
-
+		#Convert each vector to unit vector
+		for i in range(len(self.__vectors)):
+			l=0
+			l=sum(self.__vectors[i]*self.__vectors[i])
+			l=sqrt(l)
+			if l!=0:
+				self.__vectors[i]/=l
 
 
 	def __addDocument(self,document):
