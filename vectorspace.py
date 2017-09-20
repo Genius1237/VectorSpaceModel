@@ -6,6 +6,7 @@ class VectorSpaceModel():
 		self.__words={}
 		self.__vectors=[]
 		self.__wordcount=0
+		self.__doccount=0
 
 	def processDocuments(self,documents): #as of now documents is assumed to be a list of words
 		for document in documents:
@@ -14,6 +15,8 @@ class VectorSpaceModel():
 					self.__words[word]=self.__wordcount
 					self.__wordcount+=1
 
+		self.__vectors=numpy.zeros((len(documents),self.__wordcount))
+		
 		for document in documents:
 			self.__addDocument(document)
 
@@ -41,10 +44,9 @@ class VectorSpaceModel():
 
 
 	def __addDocument(self,document):
-		self.__vectors.append(numpy.zeros((self.__wordcount)))
-
 		for word in document:
-			self.__vectors[len(self.__vectors)-1][self.__words[word]]+=1
+			self.__vectors[self.__doccount][self.__words[word]]+=1
+		self.__doccount+=1
 
 	def calcSimilarity(self,query):
 		pass
