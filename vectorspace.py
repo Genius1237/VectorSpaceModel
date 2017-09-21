@@ -1,16 +1,18 @@
 import numpy
+import heapq
 from math import log,sqrt
 
 class VectorSpaceModel():
 	def __init__(self):
 		self.__words={}
 		self.__vectors=[]
+		self.__ids=[]
 		self.__wordcount=0
 		self.__doccount=0
 
-	def processDocuments(self,documents): #as of now documents is assumed to be a list of words
+	def processDocuments(self,documents): #document is a list of tuples - 1st element contains id, 2nd element contains document as a list of words
 		for document in documents:
-			for word in document:
+			for word in document[1]:
 				if word not in self.__words:
 					self.__words[word]=self.__wordcount
 					self.__wordcount+=1
@@ -50,12 +52,36 @@ class VectorSpaceModel():
 
 
 	def __addDocument(self,document):
-		for word in document:
+		self.__ids.append(document[0])
+		for word in document[1]:
 			self.__vectors[self.__doccount][self.__words[word]]+=1
 		self.__doccount+=1
 
-	def calcSimilarity(self,query):
-		pass
+	def getSimilarDocuments(self,query,k):
+		vector=numpy.zeros((self.__wordcount))
+		for word in query:
+			if word in self.__words:
+				vector[self.__words[word]]+=1
+
+		for i in range(self.__wordcount):
+			if vector[i]!=0:
+				vector[i]=1+log(vector[i])
+
+		h=[]
+		for i in range(self.__doccount):
+			h.append((-1*self.__calcCosineSimilarity(vector,i),i))
+
+		heapq.heapify(h)
+
+		ans=[]
+		for i in range(k):
+			ans.append(heapq.heappop(h)[1])
+
+		return ans
+
+	def __calcCosineSimilarity(self,query,id):
+		return query.dot(self.__vectors[id])
+		
 
 def main():
 	pass
