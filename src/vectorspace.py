@@ -17,6 +17,7 @@ class VectorSpaceModel():
 					self.__words[word]=self.__wordcount
 					self.__wordcount+=1
 
+		print(len(documents),self.__wordcount)
 		self.__vectors=numpy.zeros((len(documents),self.__wordcount))
 		
 		for document in documents:
