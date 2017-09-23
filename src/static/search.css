@@ -2,15 +2,16 @@
 	margin-top: 20px;
 }
 
-.row-bottom-space {
-	margin-bottom: 20px;
-}
-
 .align-center {
 	text-align: center;
+	vertical-align: center;
 }
 
-form {
-	margin-top: 20px;
-	margin-bottom: 20px;
+#header-1 {
+	margin-top: 40px;
+	margin-bottom: 40px; 
+}
+
+button {
+	cursor: pointer;
 }

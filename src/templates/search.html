@@ -18,39 +18,51 @@
 						<input type="number" class="form-control" id="size" name="size" placeholder="Number of listings" value="{{ size }}">
 					</div>
 					<div class="col-2">
-						<button class="btn btn-primary" type="submit" id="search-button">Search</button>
+						<button class="btn btn-primary btn-block" type="submit" id="search-button">Search</button>
 					</div>
 				</div>
 			</form>
 
-			<h4>Your search returned</h4>
-			<small class="text-muted">in {{ query_time }} seconds</small>
+			<div id="header-1">
+				<h4>Your Search Returned</h4>
+				<small class="text-muted">in {{ query_time }} seconds</small>
+			</div>
 
-			<div class="row row-top-space row-bottom-space justify-content-left">
-				<div class="col-5 align-center">
+			<div class="row row-top-space justify-content-left">
+				<div class="col-4 align-center">
 					<strong>Song Name</strong>
 				</div>
-				<div class="col-5 align-center">
+				<div class="col-4 align-center">
 					<strong>Artist</strong>
 				</div>
+				<div class="col-2 align-center">
+					<strong>Similarity</strong>
+				</div>
 			</div>
+			<br>
+
 			<div class="list-group" id="results-list">
 				{% for i in songs_info %}
-					<div class="list-group-item">
-						<div class="row">	
-							<div class="col-5 align-center">
-									<p>{{ i[1] }}</p>
-							</div>
-							<div class="col-5 align-center">
-									<p>{{ i[2] }}</p>
-							</div>
-							<div class="col-2 align-center">
-								<a href="/song?song_id={{ i[0] }}" class="btn btn-success btn-sm">
-									View More
-								</a>
+					{% if (i[3] > 0) %}
+						<div class="list-group-item">
+							<div class="row">	
+								<div class="col-4 align-center">
+									{{ i[1] }}
+								</div>
+								<div class="col-4 align-center">
+									{{ i[2] }}
+								</div>
+								<div class="col-2 align-center">
+									{{ i[3] }} %
+								</div>
+								<div class="col-2 align-center">
+									<a href="/song?song_id={{ i[0] }}&query={{ query }}&size={{ size }}" class="btn btn-success btn-sm">
+										View More
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
+					{% endif %}
 				{% endfor %}
 			</div>
 

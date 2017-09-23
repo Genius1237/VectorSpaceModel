@@ -79,7 +79,7 @@ class VectorSpaceModel():
 
 		ans=[]
 		for i in range(k):
-			ans.append(heapq.heappop(h)[1])
+			ans.append(heapq.heappop(h))
 
 		return ans
 

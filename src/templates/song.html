@@ -15,15 +15,15 @@
 					
 					<div class="row row-top-space">
 						<div class="card bg-light w-100">
-							<div class="card-header">Song: {{ song_info['song'] }}</div>
+							<div class="card-header"><strong>Song</strong>: {{ song_info['song'] }}</div>
 							<div class="card-body">
-								<p class="card-text"><strong>Artist: {{ song_info['artist'] }}</strong></p>
+								<p class="card-text"><strong>Artist</strong>: {{ song_info['artist'] }}</p>
 							</div>
 						</div>
 					</div>
 
 					<div class="row row-top-space">
-						<a href="/search/?query={{ query }}&song_id={{ song_id }}"" class="btn btn-outline-primary">Get back to results listing</a>
+						<a href="/search?query={{ query }}&size={{ size }}" class="btn btn-outline-primary">Get back to results listing</a>
 					</div>
 				</div>
 

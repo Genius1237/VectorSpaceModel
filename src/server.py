@@ -29,17 +29,22 @@ def search():
 
 @app.route('/song')
 def song():
-	temp = request.args.get('song_id', '')
-	song_info = getSong(temp)
+	size = request.args.get('size', '')
+	query = request.args.get('query', '')
+
+	song_id = request.args.get('song_id', '')
+	song_info = getSong(song_id)
 	song_info['lyrics'] = song_info['lyrics'].replace('\n', '<br>')
-	return render_template('song.html', song_info=song_info)
+	song_info['song_id'] = song_id
+	
+	return render_template('song.html', song_info=song_info, query=query, size=size)
 		
 def getDocuments():
 	""" List of tuples (song_id, lyrics)
 	"""
 	engine = sqlalchemy.create_engine('sqlite:///../data/data.db')
 	conn = engine.connect()
-	pd = pandas.read_sql("select song_id,text from song_lyrics limit 5000",conn)
+	pd = pandas.read_sql("select song_id,text from song_lyrics limit 100",conn)
 	l = [(pd.iloc[i,0], pd.iloc[i,1]) for i in pd.index]
 	return l
 
@@ -50,8 +55,8 @@ def getSongsInfo(song_ids):
 	conn = engine.connect()
 	l =[]
 	for song_id in song_ids:
-		pd = pandas.read_sql("select song_id, song, artist from song_lyrics where song_id = ?",conn, params=[song_id])
-		l.append((pd.iloc[0,0], pd.iloc[0,1], pd.iloc[0,2])) 
+		pd = pandas.read_sql("select song_id, song, artist from song_lyrics where song_id = ?",conn, params=[song_id[1]])
+		l.append((pd.iloc[0,0], pd.iloc[0,1], pd.iloc[0,2], -(100 * song_id[0]))) 
 	return l
 
 def getSong(song_id):

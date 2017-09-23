@@ -1,3 +1,10 @@
 .row-top-space {
-	margin-top: 200px;
+	margin-top: 80px;
+}
+
+.align-center {
+	text-align: center;}
+
+button {
+	cursor: pointer;
 }
