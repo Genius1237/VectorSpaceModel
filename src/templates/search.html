@@ -9,22 +9,12 @@
 	<body>
 		<div class="container">
 			
-			<form>
-				<div class="row row-top-space">
-					<div class="col-7">
-						<input class="form-control" id="query" name="query" placeholder="Your search query here" value="{{ query }}">
-					</div>
-					<div class="col-3">
-						<input type="number" class="form-control" id="size" name="size" placeholder="Number of listings" value="10">
-					</div>
-					<div class="col-2">
-						<button class="btn btn-primary btn-block" type="submit" id="search-button">Search</button>
-					</div>
-				</div>
-			</form>
+			{% include 'search_bar.html' %} 
 
-			<div id="header-1">
+			<div class="row row-top-space">
 				<h4>Your Search Returned</h4>
+			</div>
+			<div class="row">
 				<small class="text-muted">in {{ query_time }} seconds</small>
 			</div>
 
