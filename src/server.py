@@ -20,6 +20,8 @@ def index():
 def search():
 	query = request.args.get('query')
 	size = request.args.get('size')
+	if (len(size) == 0):
+		size = 10
 	query1 = string_processing.process_0(query)
 	
 	start_time = time.time()
