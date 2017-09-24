@@ -10,6 +10,9 @@ class VectorSpaceModel():
 		self.__wordcount=0
 		self.__doccount=0
 
+	def getStats(self):
+		return (self.__doccount, self.__wordcount)
+
 	def processDocuments(self,documents): #document is a list of tuples - 1st element contains id, 2nd element contains document as a list of words
 		for document in documents:
 			for word in document[1]:
@@ -17,6 +20,7 @@ class VectorSpaceModel():
 					self.__words[word]=self.__wordcount
 					self.__wordcount+=1
 
+		print(len(documents),self.__wordcount)
 		self.__vectors=numpy.zeros((len(documents),self.__wordcount))
 		
 		for document in documents:
@@ -75,7 +79,7 @@ class VectorSpaceModel():
 
 		ans=[]
 		for i in range(k):
-			ans.append(heapq.heappop(h)[1])
+			ans.append(heapq.heappop(h))
 
 		return ans
 

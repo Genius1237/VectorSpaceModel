@@ -1,0 +1,17 @@
+.row-top-space {
+	margin-top: 20px;
+}
+
+.align-center {
+	text-align: center;
+	vertical-align: center;
+}
+
+#header-1 {
+	margin-top: 40px;
+	margin-bottom: 40px; 
+}
+
+button {
+	cursor: pointer;
+}
