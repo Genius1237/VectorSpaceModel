@@ -20,12 +20,10 @@ def index():
 def search():
 	query = request.args.get('query')
 	size = request.args.get('size')
-	if (len(size) == 0):
-		size = 10
 	query1 = string_processing.process_0(query)
 	
 	start_time = time.time()
-	songs_info = getSongsInfo(m.getSimilarDocuments(query1, int(size)))
+	songs_info = getSongsInfo(m.getSimilarDocuments(query1, min(int(size), stats[0])))
 	end_time = time.time()
 	
 	return render_template('search.html', query=query, size=size, 
