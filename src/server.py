@@ -9,7 +9,7 @@ import time
 
 app = Flask(__name__)
 
-doc_limit = 100
+doc_limit = 1000
 
 @app.route('/')
 def index():
@@ -84,3 +84,5 @@ m.processDocuments(dc)
 
 process_time = time.time() - start_time
 stats = m.getStats()
+print(m._VectorSpaceModel__sparsitycount)
+print(stats[0]*stats[1])

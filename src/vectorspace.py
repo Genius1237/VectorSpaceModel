@@ -9,6 +9,7 @@ class VectorSpaceModel():
 		self.__ids=[]
 		self.__wordcount=0
 		self.__doccount=0
+		self.__sparsitycount=0
 
 	def getStats(self):
 		return (self.__doccount, self.__wordcount)
@@ -44,6 +45,7 @@ class VectorSpaceModel():
 		for i in range(len(self.__vectors)):
 			for j in range(self.__wordcount):
 				if self.__vectors[i][j]!=0:
+					self.__sparsitycount+=1
 					self.__vectors[i][j]=(1+log(self.__vectors[i][j]))*(idf[j])
 		
 		#Convert each vector to unit vector
