@@ -2,14 +2,17 @@ import numpy
 import heapq
 from math import log,sqrt
 
+#Class for vectorspacemodel
 class VectorSpaceModel():
+	
+	#Constructor
 	def __init__(self):
-		self.__words={}
-		self.__vectors=[]
-		self.__ids=[]
-		self.__wordcount=0
-		self.__doccount=0
-		self.__sparsitycount=0
+		self.__words={} #Words is a dict of all words present. Each word is mapped to it's number in the vector
+		self.__vectors=None #Vectors is the 2D matrix. Each row is a document's tf-idf vector
+		self.__ids=[] #Stores ID's of the documents to be looked up in the database
+		self.__wordcount=0 #Number of unique words in the corpus
+		self.__doccount=0 #Number of documents in the corpus
+		self.__sparsitycount=0 #Number of non-zero entries in the matrix
 
 	def getStats(self):
 		return (self.__doccount, self.__wordcount)
@@ -27,6 +30,7 @@ class VectorSpaceModel():
 		for document in documents:
 			self.__addDocument(document)
 
+		#idf is an array containing idf of each word
 		idf=numpy.zeros((self.__wordcount))
 		
 		#first calculates df
@@ -42,6 +46,7 @@ class VectorSpaceModel():
 
 		
 		#assigns score as (1 + log(tf))*(idf)
+		#calculates sparsity count along the way
 		for i in range(len(self.__vectors)):
 			for j in range(self.__wordcount):
 				if self.__vectors[i][j]!=0:
@@ -57,13 +62,13 @@ class VectorSpaceModel():
 				self.__vectors[i]/=l
 
 
-	def __addDocument(self,document):
+	def __addDocument(self,document): #adds document to the vectors
 		self.__ids.append(document[0])
 		for word in document[1]:
 			self.__vectors[self.__doccount][self.__words[word]]+=1
 		self.__doccount+=1
 
-	def getSimilarDocuments(self,query,k):
+	def getSimilarDocuments(self,query,k): #query is a list of words
 		vector=numpy.zeros((self.__wordcount))
 		for word in query:
 			if word in self.__words:
@@ -73,10 +78,13 @@ class VectorSpaceModel():
 			if vector[i]!=0:
 				vector[i]=1+log(vector[i])
 
+		#The query is now converted to a tf vector
+		#And it's cosine similarity is computed
 		h=[]
 		for i in range(self.__doccount):
 			h.append((-1*self.__calcCosineSimilarity(vector,i),i))
 
+		#The top k similar documents are obtained using a heap
 		heapq.heapify(h)
 
 		ans=[]
@@ -85,7 +93,7 @@ class VectorSpaceModel():
 
 		return ans
 
-	def __calcCosineSimilarity(self,query,id):
+	def __calcCosineSimilarity(self,query,id): #Calculates cosine similarity as the dot product of 2 unit vectors
 		return query.dot(self.__vectors[id])
 		
 
