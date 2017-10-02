@@ -1,6 +1,8 @@
 import numpy
 import heapq
 from math import log,sqrt
+from scipy.sparse import csr_matrix
+import time
 
 #Class for vectorspacemodel
 class VectorSpaceModel():
@@ -61,6 +63,8 @@ class VectorSpaceModel():
 			if l!=0:
 				self.__vectors[i]/=l
 
+		#self.__vectors=csr_matrix(self.__vectors)
+
 
 	def __addDocument(self,document): #adds document to the vectors
 		self.__ids.append(document[0])
@@ -82,7 +86,7 @@ class VectorSpaceModel():
 		#And it's cosine similarity is computed
 		h=[]
 		for i in range(self.__doccount):
-			h.append((-1*self.__calcCosineSimilarity(vector,i),i))
+			h.append((-1*(self.__calcCosineSimilarity(vector,i)),i))
 
 		#The top k similar documents are obtained using a heap
 		heapq.heapify(h)
