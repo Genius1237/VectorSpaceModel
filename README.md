@@ -10,7 +10,11 @@ Information Retrieval Course, Assignment 1
 - Change working directory to the where the repository is located
 - Install dependencies:
 	```
-	pip install
+	pip install -r requirements.txt
+	```
+- Change working directory to `src`:
+	```
+	cd src
 	```
 - Start the server:
 	```
